@@ -107,7 +107,7 @@ The output file is a tab separated table containing following columns:
 - `Description` : Description of the geneset.
 
 
-##Usuage Example
+##Example
 
 Load the R script `run_GSEAfisher.R`
 
