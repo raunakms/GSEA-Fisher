@@ -1,6 +1,4 @@
-# GSEA
-Gene Set Enrichment Analysis
-
+# GSEA: Gene Set Enrichment Analysis
 Performs GeneSet Enrichment Analysis (GSEA) based on one-tail Fisher's Exact Test. Implemented in R.
 
 
