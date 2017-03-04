@@ -1,24 +1,22 @@
 # GSEA
 Gene Set Enrichment Analysis
 
-Performs GeneSet Enrichment Analysis (GSEA) based on one-tail Fisher's Exact Test. Written in R.
-
-Read vignette.Rmd file for detailed description and instructions in using the R-function
+Performs GeneSet Enrichment Analysis (GSEA) based on one-tail Fisher's Exact Test. Implemented in R.
 
 
-##get.enrichment.test
+## get.enrichment.test
 
-####Decription:
+#### Decription:
 
 Performs GeneSet Enrichment Analysis (GSEA) based on one-tail Fisher's Exact Test
 
-####Usage
+#### Usage
  
-``` 
+```sh
 get.enrichment.test(file.query, batch, file.background, threshold, dir.gmt, dir.out)
 ```
 
-####Arguments
+#### Arguments
 
 - `file.query` : path of the file containing list of genes for which enrichment test is to be performed. One Gene in a line.
 - `batch` :name of output folder. This folder will be under the folder `dir.out`
@@ -28,7 +26,7 @@ get.enrichment.test(file.query, batch, file.background, threshold, dir.gmt, dir.
 - `dir.out` : path of output folder. Defaults to ''enrichment'' folder.
 
 
-####Value 
+#### Value 
 
 The output file is a tab separated table containing following columns:
 
@@ -40,20 +38,20 @@ The output file is a tab separated table containing following columns:
 - `Description` : Description of the enriched geneset
 
 
-##get.fisher.exact.test
+## get.fisher.exact.test
 
-####Decription:
+#### Decription:
 
 Performs one-tail Fisher's Exact Test
 
-####Usage
+#### Usage
  
-``` 
+```sh
 get.fisher.exact.test(dat.genesets, genes.queryset, genes.refset, ct)
 ```
 
 
-####Arguments
+#### Arguments
 
 - `dat.genesets` : data frame containing genesets
 - `genes.queryset` : list of genes for which enrichment test is to be performed
@@ -61,7 +59,7 @@ get.fisher.exact.test(dat.genesets, genes.queryset, genes.refset, ct)
 - `ct` : threshold of FDR pvalue cutoff  
 
 
-####Value 
+#### Value 
 
 The output file is a tab separated table containing following columns:
 
@@ -75,15 +73,15 @@ The output file is a tab separated table containing following columns:
 
 
 
-##parseGMT
+## parseGMT
 
-####Decription:
+#### Decription:
 
 Parse GMT file in appropriate format for enrichment test
 
-####Usage
+#### Usage
  
-``` 
+```sh
 parseGMT(gmt.name, dir.gmt)
 ```
 
