@@ -83,13 +83,13 @@ Parse GMT file in appropriate format for enrichment test
 parseGMT(gmt.name, dir.gmt)
 ```
 
-####Arguments
+#### Arguments
 
 - `gmt.name` : name of the folder containing GMT files. This folder should be under `dir.gmt`.
 - `dir.gmt` : path of folder under which genesets are stored. Defaults to ''genesets'' folder.
 
 
-####Value 
+#### Value 
 
 The output file is a tab separated table containing following columns:
 
@@ -98,7 +98,7 @@ The output file is a tab separated table containing following columns:
 - `Description` : Description of the geneset.
 
 
-##Example
+## Example
 
 Load the R script `run_GSEAfisher.R`
 
