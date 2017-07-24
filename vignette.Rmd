@@ -11,9 +11,9 @@ output:
 >
 Contains read-to-use R functions that performs geneset enrichment analysis (GSEA) using on-tail Fisher's Exact test.
 
-##get.enrichment.test
+## get.enrichment.test
 
-####Decription:
+#### Decription:
 
 Performs GeneSet Enrichment Analysis (GSEA) based on one-tail Fisher's Exact Test
 
