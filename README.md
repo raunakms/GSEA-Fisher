@@ -1,8 +1,8 @@
-# GSEA: Gene Set Enrichment Analysis
-Performs GeneSet Enrichment Analysis (GSEA) based on one-tail Fisher's Exact Test. Implemented in R.
+# GSEA-Fisher: Gene Set Enrichment Analysis
+Performs GeneSet Enrichment Analysis (GSEA) based on one-tail Fisher's Exact Test (Hypergeometric test). Implemented in R.
+<br/><br/>
 
-
-## get.enrichment.test
+## *get.enrichment.test*
 
 #### Decription:
 
@@ -11,17 +11,17 @@ Performs GeneSet Enrichment Analysis (GSEA) based on one-tail Fisher's Exact Tes
 #### Usage
  
 ```sh
-get.enrichment.test(file.query, batch, file.background, threshold, dir.gmt, dir.out)
+get.enrichment.test(file.query, batch, file.background, dir.gmt, threshold, dir.out)
 ```
 
 #### Arguments
 
-- `file.query` : path of the file containing list of genes for which enrichment test is to be performed. One Gene in a line.
-- `batch` :name of output folder. This folder will be under the folder `dir.out`
-- `file.background` : path of file containing list of background genes. One Gene in a line.
-- `threshold` : threshold of FDR pvalue cutoff 
-- `dir.gmt` : path of folder containing the genesets GMT files
-- `dir.out` : path of output folder. Defaults to ''enrichment'' folder.
+- `file.query` : Path of the file containing the list of genes for which enrichment test is to be performed. One Gene per line
+- `batch` : Name of the output folder. This folder will be under the folder `dir.out`
+- `file.background` : Path of the file containing the list of background genes. One Gene per line
+- `dir.gmt` : Path of the folder containing the genesets (.gmt) files
+- `threshold` : Threshold of FDR p-value cutoff. The genesets with FDR less that **threshold** will be selected
+- `dir.out` : Path of the output folder. Defaults to ''enrichment'' folder
 
 
 #### Value 
@@ -29,18 +29,20 @@ get.enrichment.test(file.query, batch, file.background, threshold, dir.gmt, dir.
 The output file is a tab separated table containing following columns:
 
 - `Category` :  Name of the Geneset
-- `pvalue` : pvalue of fisher's exact test
-- `fdr` : false discovery rate adjusted pvalue, uses ''Benjamini Hochberg'' method for pvalue correction.
-- `overlap.percent` : proportion of query genes that are also found in the enriched geneset (expressed in percentage).
-- `overlap.genes` : list of query genes that are also found in the enriched geneset
-- `Description` : Description of the enriched geneset
+- `pvalue` : P-value of fisher's exact test
+- `fdr` : False Discovery Rate (FDR) adjusted p-value, uses ''Benjamini Hochberg'' method for p-value correction
+- `overlap.percent` : Percentage of query genes that are also found in the enriched geneset
+- `overlap.genes` : List of query genes that are also found in the enriched geneset
+- `Description` : Description of the geneset
+<br/><br/>
 
 
-## get.fisher.exact.test
+
+## *get.fisher.exact.test*
 
 #### Decription:
 
-Performs one-tail Fisher's Exact Test
+Performs one-tail Fisher's Exact Test (Hypergeometric test)
 
 #### Usage
  
@@ -51,27 +53,16 @@ get.fisher.exact.test(dat.genesets, genes.queryset, genes.refset, ct)
 
 #### Arguments
 
-- `dat.genesets` : data frame containing genesets
-- `genes.queryset` : list of genes for which enrichment test is to be performed
-- `genes.refset` : list of background set of genes
-- `ct` : threshold of FDR pvalue cutoff  
-
-
-#### Value 
-
-The output file is a tab separated table containing following columns:
-
-- `Category` :  Name of the Geneset.
-- `pvalue` : pvalue of fisher's exact test.
-- `fdr` : false discovery rate adjusted pvalue, uses ''Benjamini Hochberg'' method for pvalue correction.
-- `overlap.percent` : proportion of query genes that are also found in the enriched geneset (expressed in percentage).
-- `overlap.genes` : list of query genes that are also found in the enriched geneset.
-- `Description` : Description of the geneset.
+- `dat.genesets` : Data frame containing genesets (output file generated using **parseGMT()** function)
+- `genes.queryset` : List of genes for which enrichment test is to be performed
+- `genes.refset` : List of background set of genes
+- `ct` : Threshold of FDR p-value cutoff. The genesets with FDR less that **ct** will be selected
+<br/><br/>
 
 
 
 
-## parseGMT
+## *parseGMT*
 
 #### Decription:
 
@@ -80,13 +71,12 @@ Parse GMT file in appropriate format for enrichment test
 #### Usage
  
 ```sh
-parseGMT(gmt.name, dir.gmt)
+parseGMT(dir.gmt)
 ```
 
 #### Arguments
 
-- `gmt.name` : name of the folder containing GMT files. This folder should be under `dir.gmt`.
-- `dir.gmt` : path of folder under which genesets are stored. Defaults to ''genesets'' folder.
+- `dir.gmt` : path of folder under which genesets (.gmt) files are stored
 
 
 #### Value 
@@ -94,36 +84,36 @@ parseGMT(gmt.name, dir.gmt)
 The output file is a tab separated table containing following columns:
 
 - `Category` :  Name of the Geneset
-- `Genesets` : list of genes in the geneset.
-- `Description` : Description of the geneset.
+- `Genesets` : List of genes in the geneset each seperated by a column (':')
+- `Description` : Description of the geneset
+<br/><br/>
 
 
-## Example
+## *How to run GSEA-Fisher*
 
 Load the R script `run_GSEAfisher.R`
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-source("./run_GSEAfisher.R")
+source("run_GSEAfisher.R")
 ```
 
 Parse GMT files. To be used only once for a file. If the GMT files are already parsed, skip this step.
 
 ```{r}
-parseGMT(gmt.name="Msigdb")
+parseGMT(gmt.name="genesets/Msigdb")
 ```
 
 Now run the enrichment test
 ```{r}
 # Defile Paths
-dir.gmt <- "./genesets/Msigdb"
-file.background <- "./backgroundset/background_genelist_test.txt"
-file.query <- "./data/genelist_test.txt"
-batch <- "TEST"
+dir.db <- file.path("genesets/Msigdb")
+file.bg <- file.path(dir.wrk, "data/background_genelist_test.txt")
+file.genelist <- file.path(dir.wrk, "data/genelist_test.txt")
 
 # Perform Enrichment Test
-get.enrichment.test(file.query, batch, file.background, threshold=0.001, dir.gmt)
+get.enrichment.test(file.query=file.genelist, batch="test", file.background=file.bg, dir.gmt=dir.db, threshold=0.01)
 ```
 
-The output files can be found under `./enrichment/TEST` folder.
+The output files can be found under `enrichment/TEST` folder.
 
 
